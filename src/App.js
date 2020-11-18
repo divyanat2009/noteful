@@ -3,9 +3,7 @@ import {Route} from 'react-router-dom';
 import Header from './Header/Header';
 import Main from './Main/Main';
 import Sidebar from './Sidebar/Sidebar';
-import AddFolder from './AddFolder/AddFolder';
-import AddNote from './AddNote/AddNote';
-import NotefulContext from './NotefulContext';
+import NotefulContext from './NotefulContext.js';
 import config from './config';
 import './App.css';
 
@@ -70,35 +68,11 @@ class App extends Component{
 
   }
 
-  addFolder = (folder) => {
-    this.setState({
-      folders: [...this.state.folders, folder]
-    });
-  }
-
-  addNote = (note) => {
-    this.setState({
-      notes: [...this.state.notes, note]
-    });
-  }
-
-  deleteNote = (noteId) =>{
-    const newNotes = this.state.notes.filter(note => note.id !== noteId)
-      this.setState(
-        {
-          notes: newNotes
-        }
-      );
-  }
-
   render(){
 
     const contextValue = {
       folders: this.state.folders,
       notes: this.state.notes,
-      addFolder: this.addFolder,
-      addNote: this.addNote,
-      deleteNote: this.deleteNote,
     }
    
     return (
@@ -117,12 +91,8 @@ class App extends Component{
 
               {/* dynamic note /note/id */}
               <Route path='/note/:id' component={Sidebar}/>
-              <Route path='/note/:id' component={Main}/>
-
+              <Route path='/note/:id' component={Main}/>             
               
-              <Route path='/add-folder' component={AddFolder}/>
-              <Route path='/add-note' component={AddNote}/>
-
             </div>
             </NotefulContext.Provider>
         </main>

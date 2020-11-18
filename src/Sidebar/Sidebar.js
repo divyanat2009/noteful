@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Folder from '../Folder/Folder';
 import {Link} from 'react-router-dom';
-import NotefulContext from '../NotefulContext';
+import NotefulContext from '../NotefulContext.js';
 import NotefulError from '../NotefulError';
 import './Sidebar.css';
 
