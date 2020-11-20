@@ -33,7 +33,7 @@ class Main extends Component{
          
     }else if(this.props.match.path === '/folder/:id' ){
         const folderId = this.props.match.params.id;
-        content = this.context.notes.map((note, i) => {
+        content = this.context.notes.forEach((note, i) => {
             const key = `${note.name}-${i}`;
             if(note.folder_id.toString() === folderId){
                 return(<Note key={key} {...note} history={this.props.history}/>)
