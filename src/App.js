@@ -124,7 +124,7 @@ class App extends Component{
               <Route path='/add-note' component={AddNote}/>
 
             </div>
-            </NotefulContext.Provider>
+            </NotefulContext.Provider>            
         </main>
     );
   }
