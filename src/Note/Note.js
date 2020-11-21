@@ -67,7 +67,8 @@ class Note extends Component{
 Note.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    modified: PropTypes.string.isRequired
+    modified: PropTypes.string.isRequired,
+    deleteNote:PropTypes.string.isRequired
 }
 
 export default Note;
