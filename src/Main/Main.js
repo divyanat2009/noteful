@@ -59,6 +59,7 @@ class Main extends Component{
   }
 }
 Main.propTypes = {
-    content: PropTypes.string.isRequired
+    match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
   }
 export default Main;

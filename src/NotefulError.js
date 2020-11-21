@@ -19,6 +19,6 @@ class NotefulError extends Component{
   }
 }
 NotefulError.propTypes = {
-  content: PropTypes.string.isRequired
+  message: PropTypes.string.isRequired
 }
 export default NotefulError;
