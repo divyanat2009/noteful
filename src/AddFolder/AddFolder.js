@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './AddFolder.css';
 import NotefulContext from '../NotefulContext';
+import PropTypes from 'prop-types';
 import config from '../config';
 
 class AddFolder extends Component{
@@ -87,5 +88,7 @@ class AddFolder extends Component{
     );
   }
 }
-
+AddFolder.propTypes = {
+  history: PropTypes.string.isRequired
+}
 export default AddFolder;
