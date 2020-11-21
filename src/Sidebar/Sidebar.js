@@ -50,5 +50,7 @@ class Sidebar extends Component{
   }
 }
 
-
+Sidebar.propTypes = {
+  content: PropTypes.string.isRequired
+}
 export default Sidebar;

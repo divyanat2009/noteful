@@ -18,5 +18,7 @@ class NotefulError extends Component{
     return this.props.children;
   }
 }
-
+NotefulError.propTypes = {
+  content: PropTypes.string.isRequired
+}
 export default NotefulError;

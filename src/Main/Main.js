@@ -58,5 +58,7 @@ class Main extends Component{
     );
   }
 }
-
+Main.propTypes = {
+    content: PropTypes.string.isRequired
+  }
 export default Main;
