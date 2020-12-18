@@ -1,7 +1,5 @@
 {
     "version": 2,
-    "alias": "Noteful",
-    "name": "Noteful",
     "routes": [
       {
         "src": "^/static/(.*)",
