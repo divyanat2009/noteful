@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import NotefulContext from '../NotefulContext.js';
 import NotefulError from '../NotefulError';
 import './Sidebar.css';
+import PropTypes from 'prop-types';
 
 class Sidebar extends Component{
   static contextType = NotefulContext;
@@ -51,6 +52,6 @@ class Sidebar extends Component{
 }
 
 Sidebar.propTypes = {
-  content: PropTypes.string.isRequired
+  content: PropTypes.string
 }
 export default Sidebar;

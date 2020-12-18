@@ -5,6 +5,7 @@ import './Main.css';
 import Selected from '../Selected/Selected';
 import NotefulContext from '../NotefulContext';
 import NotefulError from '../NotefulError';
+import PropTypes from 'prop-types';
 
 class Main extends Component{
     static contextType = NotefulContext;
