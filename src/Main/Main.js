@@ -36,7 +36,7 @@ class Main extends Component{
         const folderId = this.props.match.params.id;
         content = this.context.notes.forEach((note, i) => {
             const key = `${note.name}-${i}`;
-            if(note.folder_id.toString() === folderId){
+            if(note.folderid.toString() === folderId){
                 return(<Note key={key} {...note} history={this.props.history}/>)
             }
         }) 

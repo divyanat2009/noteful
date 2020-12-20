@@ -52,9 +52,9 @@ class AddNote extends Component{
     const name = this.state.noteTitle.value;
     const content = this.state.content.value;
     //const modified = new Date().toISOString();
-    const folder_id = this.state.folderId.value
+    const folderid = this.state.folderId.value
 
-    const note = { name, folder_id, content}
+    const note = { name, folderid, content}
     const options = {
       method: 'POST',
       body: JSON.stringify(note),
