@@ -1,5 +1,6 @@
 import React from 'react'
 import ApiContext from '../ApiContext'
+import Button from '../Button/Button'
 import { findNote, findFolder } from '../notes-helpers'
 import './NotePageNav.css'
 import PropTypes from 'prop-types'
@@ -22,7 +23,7 @@ export default class NotePageNav extends React.Component {
     const folder = findFolder(folders, note.folder_id)
     return (
       <div className='NotePageNav'>
-        <button
+        <Button
           tag='button'
           role='link'
           onClick={() => this.props.history.goBack()}
@@ -30,7 +31,7 @@ export default class NotePageNav extends React.Component {
         >
           
           Back
-        </button>
+        </Button>
         {folder && (
           <h3 className='NotePageNav__folder-name'>
             {folder.name}

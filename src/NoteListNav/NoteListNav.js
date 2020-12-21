@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import ApiContext from '../ApiContext'
+import Button from '../Button/Button'
 import { countNotesForFolder } from '../notes-helpers'
 import './NoteListNav.css'
 
@@ -27,7 +28,7 @@ export default class NoteListNav extends React.Component {
           )}
         </ul>
         <div className='NoteListNav__button-wrapper'>
-          <button
+          <Button
             tag={Link}
             to='/add-folder'
             type='button'
@@ -35,7 +36,7 @@ export default class NoteListNav extends React.Component {
           >
             
             Folder
-          </button>
+          </Button>
         </div>
       </div>
     )

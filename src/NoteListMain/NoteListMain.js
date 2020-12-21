@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Note from '../Note/Note'
 import ApiContext from '../ApiContext'
+import Button from '../Button/Button'
 import { getNotesForFolder } from '../notes-helpers'
 import './NoteListMain.css'
 
@@ -31,7 +32,7 @@ export default class NoteListMain extends React.Component {
           )}
         </ul>
         <div className='NoteListMain__button-container'>
-          <button
+          <Button
             tag={Link}
             to='/add-note'
             type='button'
@@ -39,7 +40,7 @@ export default class NoteListMain extends React.Component {
           >
             
             Note
-          </button>
+          </Button>
         </div>
       </section>
     )
