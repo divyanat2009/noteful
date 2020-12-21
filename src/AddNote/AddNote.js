@@ -1,177 +1,146 @@
-import React, {Component} from 'react';
-import './AddNote.css';
-import NotefulContext from '../NotefulContext';
-import PropTypes from 'prop-types';
+import React from 'react';
 import config from '../config';
+import ApiContext from '../ApiContext';
+import ValidationError from '../ValidationError';
+import PropTypes from 'prop-types';
 
-class AddNote extends Component{
-  static contextType = NotefulContext;
-  state = {
-    noteTitle: {
-      value: '',
-      touched: false
-    },
-    content: {
-        value: '',
-        touched: false
-    },
-    folderId:{
-        value:'',
-        touched: false
-    }
-  }
-  updateNoteTitle(noteTitle ){
-    this.setState({
-        noteTitle: {value: noteTitle, touched: true}
+class AddNote extends React.Component {
+	constructor(props) {
+    super(props);
+    this.state = {
+			name: {
+				value: '',
+			  touched: false
+			},
+			folderId: {
+				value: '',
+				touched: false
+			},
+			content: {
+				value: '',
+				touched: false
+			}
+		}
+	}
+
+	static contextType = ApiContext;
+	
+  handleNoteSubmit = (event) => {
+		event.preventDefault();
+
+		const newNote = JSON.stringify({
+      title: this.state.name.value,
+      folder_id: this.state.folderId.value,
+      content: this.state.content.value,
     })
-  }
-  updateContent(content){
+
+		fetch(`${config.API_ENDPOINT}/notes`,
+		{
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: newNote
+		})
+		.then(res => {
+			if (!res.ok)
+				return res.json().then(e => Promise.reject(e))
+			return res.json()
+		})
+		.then(response => this.context.addNote(response))
+		.then(
+			this.props.history.push('/')
+		)
+		.catch(error => {
+			alert(error.message)
+		})
+	}
+
+  updateFolderId = (folderId) => {
     this.setState({
-        content: {value: content, touched: true}
+      folderId: {
+				value: folderId,
+				touched: true
+			}
     })
-  }
-  updateFolder(folderName, folders){
+	}
+	
+	updateName = (name) => {
+		this.setState({
+		  name: {
+				value: name,
+				touched: true
+			}
+		})
+	}
 
-    const folder = folders.find(folder => folder.name === folderName);
-    if(folder){
-        this.setState({
-            folderId: {value: folder.id, touched: true}
-        });
-    }else{
-        this.setState({folderId: {touched: true}})
-    }
-  }
+	updateContent = (content) => {
+		this.setState({
+			content: {
+				value: content,
+				touched: true
+			}
+		})
+	}
 
-  displayError(err){
-    alert(err);
-  }
+  validateName() {
+		const name = this.state.name.value.trim();
+		  if (name.length === 0) {
+				return 'Name is required'
+			}
+	}
 
-  handleSubmit(event, callback){
-    event.preventDefault();
+	validateFolderSelect() {
+		const folderIsSelected = this.state.folderId.value;
+			return !folderIsSelected;
+	}
 
-    const name = this.state.noteTitle.value;
-    const content = this.state.content.value;
-    //const modified = new Date().toISOString();
-    const folderid = this.state.folderId.value
-
-    const note = { name, folderid, content}
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(note),
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': `Bearer ${config.API_KEY}`
-      }
-    };
-
-    fetch(`${config.API_ENDPOINT}api/notes`, options)
-    .then(response => {
-        if(!response.ok){
-          throw new Error('Something went wrong');
-        }
-        return response;
-      })
-      .then(response => response.json())
-      .then(data => {
-        callback(data);
-        this.setState(
-            {
-                noteTitle:{value:''},
-                content:{value:''},
-                folderId:{value:''},
-            }
-        );
-        this.props.history.push('/');
-        }
+	render() {
+    const folderList = this.context.folders.map (folder => {
+      return (
+        <option key= {folder.id} value={folder.id}>{folder.folder_name}</option>
       )
-      .catch(err => this.displayError(err));
-    
-  }
-  
-  validateTitle(){
-    const noteTitle = this.state.noteTitle.value.trim();
-    if(noteTitle.length === 0){
-      return <p className='form-error'>{'Note Title is required'}</p>  
-    }
-  }
+    })
 
-  validateContent(){
-    const content = this.state.content.value.trim();
-    if(content.length === 0){
-      return <p className='form-error'>{'Content is required'}</p>  
-    }
-  }
-
-  validateFolder(){
-    const folderId = this.state.folderId.value;
-    if(!folderId){
-      return <p className='form-error'>{'Select a Folder from the list'}</p>  
-    }
-  }
-
-  render(){
-    const folders = this.context.folders.map((folder,i) => {
-        const folderName = folder.name;
-        return(
-            <option key={`${folderName}-${i}`} value={`${folderName}`}>{folderName}</option>
-        );
-    });
-    return (
-      <NotefulContext.Consumer>
-        {(context) => (
-          <div className='AddNote'>
-              <h2>Add Note</h2>
-              <form className='AddNote__form' onSubmit={e => this.handleSubmit(e, context.addNote)}>
-                <label htmlFor='noteTitle'>Note Title</label>
-                <input 
-                  placeholder='Note Title' 
-                  name='noteTitle' 
-                  id='noteTitle'
-                  onChange={e => this.updateNoteTitle(e.target.value)}/>
-                  {this.state.noteTitle.touched && this.validateTitle()}
-
-                <label htmlFor='content'>Content</label>
-                <textarea
-                  placeholder='Lorem Ipsum' 
-                  name='content' 
-                  id='content'
-                  onChange={e => this.updateContent(e.target.value)}> 
-                </textarea>
-                {this.state.content.touched && this.validateContent()}
-
-                <label htmlFor="folders">Choose a folder:</label>
-                <select 
-                    name="folders" 
-                    id="folders"
-                    onChange={e => this.updateFolder(e.target.value, context.folders)}>
-                    <option key={'select-folder'} id='select-folder'>Select Folder...</option>
-                    {folders}
-                </select>  
-                {this.state.folderId.touched && this.validateFolder()}
-                  
-                <button 
-                    type='submit'
-                    disabled={
-                        this.validateTitle() ||
-                        this.validateContent() ||
-                        this.validateFolder()  
-                    }
-                    >
-                    + Add
-                </button>
-                <button type='reset'
-                  onClick={() => this.props.history.push('/')}
-                  >Cancel
-                </button>
-              </form>
-          </div>
-        )}
-     </NotefulContext.Consumer>
-    );
-  }
-}
-
-AddNote.propTypes = {
-  history: PropTypes.string.isRequired
+     
+		return (
+			<form onSubmit={this.handleNoteSubmit}>
+					<label htmlFor="note-name">Title *</label>
+					<input 
+						id="note-name" 
+						type="text" 
+						name="note-name"
+						onChange={e => this.updateName(e.target.value)}
+					>
+					</input>
+					{this.state.name.touched && (<ValidationError message = {this.validateName()}/>)}
+          <label htmlFor="content">Content</label>
+					<textarea id="content" 
+						name="content" 
+						onChange={e => this.updateContent(e.target.value)}
+					></textarea>
+					<label htmlFor="folders">Save in *</label>
+					<select 
+					  id="folders"
+					  name="folders"
+						onChange={e => this.updateFolderId(e.target.value)}
+						defaultValue="Select Folder"
+					>
+					<option disabled>Select Folder</option>
+            {folderList}
+          </select>
+					<button type="submit"
+					disabled = {this.validateName()||this.validateFolderSelect()
+				}
+					>Save</button>
+			</form>
+		)
+	}
 }
 export default AddNote;
+
+AddNote.propTypes = {
+	folders: PropTypes.arrayOf(PropTypes.shape({
+		id: PropTypes.string.isRequired,
+		name: PropTypes.string.isRequired,
+	})),
+	addNote: PropTypes.func
+}

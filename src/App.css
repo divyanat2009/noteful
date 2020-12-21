@@ -1,6 +1,0 @@
-.App__main{
-  /*todo: calculate footer hight*/
-  min-height: calc(100vh - 50px);
-  height: 100%;
-  display: flex;
-}
