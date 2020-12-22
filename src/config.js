@@ -1,5 +1,5 @@
 const url = {
-    API_ENDPOINT: `https://secret-badlands-38498.herokuapp.com/api`,
+    API_ENDPOINT: `http://localhost:8000/api`,
   }
 
 export default url;

@@ -23,19 +23,20 @@ class App extends Component {
 			fetch(`${config.API_ENDPOINT}/folders`)
 		])
 			.then(([notesRes, foldersRes]) => {
-				if (!notesRes.ok)
-					return notesRes.json().then(e => Promise.reject(e));
-				if (!foldersRes.ok)
-					return foldersRes.json().then(e => Promise.reject(e));
-
+				if (!notesRes.ok){
+					console.log("Unsuccessful")
+					//return notesRes.json().then(e => Promise.reject(e));
+				}
+				if (!foldersRes.ok){
+					console.log("Unsuccessful")
+					//return foldersRes.json().then(e => Promise.reject(e));
+				}
 				return Promise.all([notesRes.json(), foldersRes.json()]);
 			})
 			.then(([notes, folders]) => {
 				this.setState({notes, folders});
 			})			
-	        .catch(error => {
-	            console.error({ error });
-	        });
+	        
     }
 
 	handleDeleteNote = noteId => {
