@@ -32,11 +32,11 @@ class App extends Component {
 			})
 			.then(([notes, folders]) => {
 				this.setState({notes, folders});
-			})
-			.catch(error => {
-				console.log(error);
-			});
-	}
+			})			
+	        .catch(error => {
+	            console.error({ error });
+	        });
+    }
 
 	handleDeleteNote = noteId => {
 			this.setState({
