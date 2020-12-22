@@ -25,18 +25,18 @@ class App extends Component {
 			.then(([notesRes, foldersRes]) => {
 				if (!notesRes.ok){
 					console.log("Unsuccessful")
-					//return notesRes.json().then(e => Promise.reject(e));
+					return notesRes.json().then(e => Promise.reject(e));
 				}
 				if (!foldersRes.ok){
 					console.log("Unsuccessful")
-					//return foldersRes.json().then(e => Promise.reject(e));
+					return foldersRes.json().then(e => Promise.reject(e));
 				}
 				return Promise.all([notesRes.json(), foldersRes.json()]);
 			})
 			.then(([notes, folders]) => {
 				this.setState({notes, folders});
 			})			
-	        
+	        .catch (err => console.error(err))
     }
 
 	handleDeleteNote = noteId => {
