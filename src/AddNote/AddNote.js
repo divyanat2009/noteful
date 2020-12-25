@@ -37,11 +37,11 @@ class AddNote extends React.Component {
 		fetch(`${config.API_ENDPOINT}api/notes`,
 		{
 			method: 'POST',
+			body: newNote,
 			headers: { 
 			'content-type': 'application/json',
 			'Authorization': `Bearer ${config.API_KEY}`
-		 },
-			body: newNote
+		 },	
 		})
 		.then(res => {
             if (!res.ok) {
@@ -55,7 +55,7 @@ class AddNote extends React.Component {
 		.then(
 			this.props.history.push('/')
 		)
-		.catch(error => alert(error.message))
+		.catch(error => console.error(error))
 	}
 
   updateFolderId = (folderId) => {
