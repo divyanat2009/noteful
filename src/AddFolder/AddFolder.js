@@ -24,24 +24,29 @@ class AddFolder extends React.Component {
 			folder_name: this.state.name.value
 		})
 
-		fetch(`${config.API_ENDPOINT}/folders`,
+		fetch(`${config.API_ENDPOINT}api/folders`,
 		{
 			method: 'POST',
-			headers: { 'content-type': 'application/json' },
+			headers: { 'content-type': 'application/json',
+			'Authorization': `Bearer ${config.API_KEY}`
+		 },
 			body: newFolder
 		})
 		.then(res => {
-			if (!res.ok)
-				return res.json().then(e => Promise.reject(e))
-			return res.json()
+			console.log(res)
+			if (!res.ok){
+			return res.json().then(error => {
+				throw error
+			})
+		  }
+		  return res.json()
 		})
 		.then(response => this.context.addFolder(response))
 		.then(
 			this.props.history.push('/')
 		)
-		.catch(error => {
-			alert(error.message)
-		})
+		
+		.catch(error => alert(error.message))
 	}
 	
 	updateFolderName = (name) => {

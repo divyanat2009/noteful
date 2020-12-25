@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { format } from 'date-fns'
 import ApiContext from '../ApiContext'
 import config from '../config'
 import './Note.css'
@@ -15,15 +14,20 @@ export default class Note extends React.Component {
   handleClickDelete = e => {
     e.preventDefault()
     const noteId = this.props.id
-    fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
+    fetch(`${config.API_ENDPOINT}api/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${config.API_KEY}`
       },
     })
       .then(res => {
-        if (!res.ok)
-          return res.json().then(e => Promise.reject(e))
+        if (!res.ok){
+          return res.json().then(error => {
+          throw error
+          })
+        }
+        return res.json()
       })
       .then(() => {
         this.context.deleteNote(noteId)
@@ -57,7 +61,7 @@ export default class Note extends React.Component {
             Modified
             {' '}
             <span className='Date'>
-             {/* {format(date_modified, 'Do MMM YYYY')}*/}
+             {(date_modified, 'DD MMM YYYY')}
             </span>
           </div>
         </div>

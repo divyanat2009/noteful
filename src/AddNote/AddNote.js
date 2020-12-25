@@ -34,24 +34,28 @@ class AddNote extends React.Component {
       content: this.state.content.value,
     })
 
-		fetch(`${config.API_ENDPOINT}/notes`,
+		fetch(`${config.API_ENDPOINT}api/notes`,
 		{
 			method: 'POST',
-			headers: { 'content-type': 'application/json' },
+			headers: { 
+			'content-type': 'application/json',
+			'Authorization': `Bearer ${config.API_KEY}`
+		 },
 			body: newNote
 		})
 		.then(res => {
-			if (!res.ok)
-				return res.json().then(e => Promise.reject(e))
-			return res.json()
-		})
+            if (!res.ok) {
+              return res.json().then(error => {
+              throw error
+              })
+            }
+            return res.json()
+          })
 		.then(response => this.context.addNote(response))
 		.then(
 			this.props.history.push('/')
 		)
-		.catch(error => {
-			alert(error.message)
-		})
+		.catch(error => alert(error.message))
 	}
 
   updateFolderId = (folderId) => {

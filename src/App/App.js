@@ -17,27 +17,74 @@ class App extends Component {
 			folders: []
 	};
 
+	formatDate = (notes)=>{
+
+		let updatedNotes = notes.map(note=>note={
+		  ...note, 
+		  date_modified:(note.date_modified).slice(0,10)
+		})
+		return updatedNotes
+	  }
+	  
 	componentDidMount() {
-		Promise.all([
-			fetch(`${config.API_ENDPOINT}/notes`),
-			fetch(`${config.API_ENDPOINT}/folders`)
-		])
-			.then(([notesRes, foldersRes]) => {
-				if (!notesRes.ok){
-					console.log("Unsuccessful")
-					return notesRes.json().then(e => Promise.reject(e));
-				}
-				if (!foldersRes.ok){
-					console.log("Unsuccessful")
-					return foldersRes.json().then(e => Promise.reject(e));
-				}
-				return Promise.all([notesRes.json(), foldersRes.json()]);
-			})
-			.then(([notes, folders]) => {
-				this.setState({notes, folders});
-			})			
-	        .catch (err => console.error(err))
-    }
+	this.setState({ error: null })
+  //getting the folders
+  
+    fetch(`${config.API_ENDPOINT}api/folders/`,{
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${config.API_KEY}`
+    },
+  })
+    .then(res => {
+      if(!res.ok) {
+        throw new Error('Something went wrong, please try again later.');
+      }
+      return res;
+    })
+    .then(res => res.json())
+    .then(data => {
+      this.setState({
+        folders:data,
+       });
+    })
+    .catch(err => {
+      this.setState({
+       error: err.message
+       });
+    });
+
+    //getting the notes
+    
+    fetch(`${config.API_ENDPOINT}api/notes/`,{
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${config.API_KEY}`
+    },
+  })
+    .then(res => {
+      if(!res.ok) {
+        throw new Error('Something went wrong, please try again later.');
+      }
+      return res;
+    })
+    .then(res => res.json())
+    .then(data => {
+      //format all the dates 
+      const updatedNotes = this.formatDate(data);
+      this.setState({
+        notes:updatedNotes,
+       });
+    })
+    .catch(err => {
+       this.setState({
+        error: err.message
+        });
+    });
+}
+
 
 	handleDeleteNote = noteId => {
 			this.setState({
