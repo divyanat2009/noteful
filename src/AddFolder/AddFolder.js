@@ -33,7 +33,7 @@ class AddFolder extends React.Component {
 			body: newFolder
 		})
 		.then(res => {
-			console.log(res)
+			//console.log(res)
 			if (!res.ok){
 			return res.json().then(error => {
 				throw error
