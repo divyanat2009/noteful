@@ -1,0 +1,89 @@
+.App {
+    text-align: center; 
+    margin:auto 1em; 
+  }
+  
+  main{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    flex-direction: column-reverse;
+    border:1px #000 solid;
+    font-family:"Segoe UI", 'Roboto', sans-serif;
+  
+  }
+  
+  
+  ul{
+    list-style-type: none;
+    list-style-type: none;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+  }
+  
+  header {
+    background-color: #291622;
+    color:#fff;
+    padding: 1em 0;
+    border-bottom:1px solid #fff;
+  }
+  
+  header a {
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  button {
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-color: #000;
+    font-size: 17px;
+    margin: 10px auto;
+  }
+  
+  button:hover {
+    background-color: #8c848b;
+    color: #fff;
+   
+  }
+  
+  a:-webkit-any-link{
+    color:#000;
+  }
+  
+  header a:-webkit-any-link{
+    color:#fff;
+  }
+  header a:-webkit-any-link:hover{
+  border-bottom:2px solid #fff;
+  }
+  
+  .Noteful__error {
+    color: red;
+  }
+  
+  .main-sidebar{
+    background-color:#3d2839;
+    color:#fff;
+    width:100%;
+  }
+  
+  @media only screen and (min-width:760px){
+    main{
+    flex-direction: row;
+    }
+  
+    .main-sidebar{
+      width:30%;
+      border-right:1px #000 solid;
+    }
+    .main-main{
+      width:68%;
+      margin: 0 auto;
+      /*border:1px red solid;*/
+    }
+  }

@@ -1,0 +1,25 @@
+.NoteList{
+    width:100%;
+}
+
+.note-item{
+    text-align:left;
+    border:1px solid #000;
+    width: 90%;
+    margin: 1em auto;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:#291622;
+    color:#fff;
+}
+
+.note-item a:-webkit-any-link{
+    color:#fff;
+}
+
+.NoteList__button{
+    width:300px;
+    margin:10px;
+}
