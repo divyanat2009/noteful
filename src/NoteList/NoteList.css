@@ -11,8 +11,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color:#291622;
-    color:#fff;
+    background-color:#f1e0eb;
+    color:rgb(7, 6, 6);
 }
 
 .note-item a:-webkit-any-link{

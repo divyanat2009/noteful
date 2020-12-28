@@ -9,7 +9,7 @@ class Sidebar extends Component {
     
    render(){
     const folderObj = this.context.folders;
-    const { folderOfCurrentNote } = this.context;
+    const { folderOfCurrentNote, notes } = this.context;
    
     if(this.context.sideBarType==='folders')
     {
@@ -22,7 +22,8 @@ class Sidebar extends Component {
          onClick={() => this.context.updateFolderSelected(folder.id)}>   
             <NavLink to={`/folder/${folder.id}`} key={folder.id} >
                        
-                    {folder.folder_name}                    
+                    {folder.folder_name} 
+                    ({notes.filter(note => note.folder_id === folder.id).length})                   
               
             </NavLink>
             </li>
@@ -51,7 +52,7 @@ class Sidebar extends Component {
 }
 
 Sidebar.propTypes = {
-  folders: PropTypes.arrayOf(PropTypes.shape({  
+  folders: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })),
