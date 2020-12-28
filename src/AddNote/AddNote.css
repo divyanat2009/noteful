@@ -54,5 +54,5 @@ button[type=reset] {
 .error {
     margin-top: 10px;
     margin-left: 40px;
-    color: purple;
+    color: rgb(105, 9, 9);
 }

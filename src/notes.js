@@ -1,4 +1,5 @@
-export default {
+export default 
+{
     "folders": [
       {
         "id": "b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1",
@@ -14,7 +15,7 @@ export default {
       },
       {
         "id": "b07162f0-mete",
-        "name": "Teachey"
+        "name": "Funny"
       }
     ],
     "notes": [
